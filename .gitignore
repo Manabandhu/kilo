@@ -1,0 +1,54 @@
+# ManaBandhu - Community super app for South Asians in the US
+node_modules/
+.expo/
+dist/
+web-build/
+npm-debug.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-report/
+
+# Env / secrets
+.env
+.env.local
+.env.*.local
+backend/.env
+apps/client/.env
+!apps/client/.env.example
+!.env.example
+
+# Native
+android/
+ios/
+*.keystore
+google-services.json
+GoogleService-Info.plist
+
+# Build artifacts
+*.log
+.DS_Store
+coverage/
+build/
+out/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Java / Gradle
+.gradle/
+backend/build/
+!**/src/main/resources/**
+
+# Supabase local
+supabase/.temp/
+supabase/.branches/
+
+# Testing
+playwright-report/
+test-results/
