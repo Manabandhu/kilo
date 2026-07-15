@@ -1,0 +1,8 @@
+{
+  "name": "@manabandhu/shared-config",
+  "version": "0.1.0",
+  "description": "Shared TS/ESLint config for ManaBandhu packages",
+  "license": "UNLICENSED",
+  "private": true,
+  "files": ["tsconfig.base.json", "eslint.base.js"]
+}
