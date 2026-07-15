@@ -1,13 +1,11 @@
 package com.manabandhu.backend.chat.infrastructure;
 
-import com.manabandhu.backend.chat.domain.MessageRead;
-import com.manabandhu.backend.chat.domain.MessageReadId;
-import org.springframework.data.jpa.repository.JpaRepository;
-import java.util.Optional;
 import java.util.UUID;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface MessageReadRepository extends JpaRepository<MessageRead, MessageReadId> {
-    boolean existsById_MessageIdAndId_UserId(UUID messageId, UUID userId);
-    long countById_MessageId(UUID messageId);
-    Optional<MessageRead> findById_MessageIdAndId_UserId(UUID messageId, UUID userId);
+@Repository
+public interface MessageReadRepository extends JpaRepository<MessageReadEntity, UUID> {
+    boolean existsByMessageIdAndUserId(UUID messageId, UUID userId);
+    void deleteByMessageIdAndUserId(UUID messageId, UUID userId);
 }
