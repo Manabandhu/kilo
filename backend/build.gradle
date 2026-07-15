@@ -42,6 +42,12 @@ dependencies {
 
     // Decimal money handling uses java.math.BigDecimal from the JDK.
 
+    // Lombok (reduces entity/DTO boilerplate)
+    compileOnly "org.projectlombok:lombok:1.18.34"
+    annotationProcessor "org.projectlombok:lombok:1.18.34"
+    testCompileOnly "org.projectlombok:lombok:1.18.34"
+    testAnnotationProcessor "org.projectlombok:lombok:1.18.34"
+
     // Test
     testImplementation "org.springframework.boot:spring-boot-starter-test"
     testImplementation "org.springframework.security:spring-security-test"
