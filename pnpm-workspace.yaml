@@ -1,0 +1,10 @@
+packages:
+  - "packages/*"
+  - "apps/client"
+  - "backend"
+
+onlyBuiltDependencies:
+  - "@react-native-async-storage/async-storage"
+  - "react-native-reanimated"
+  - "expo"
+  - "sharp"

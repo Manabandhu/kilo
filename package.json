@@ -1,0 +1,27 @@
+{
+  "name": "manabandhu",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@9.6.0",
+  "scripts": {
+    "dev:client": "pnpm --filter @manabandhu/client start",
+    "dev:backend": "pnpm --filter @manabandhu/backend dev",
+    "build:client": "pnpm --filter @manabandhu/client build:web",
+    "build:backend": "pnpm --filter @manabandhu/backend build",
+    "lint": "pnpm --filter @manabandhu/client lint",
+    "typecheck": "pnpm --filter @manabandhu/client typecheck",
+    "test": "pnpm --filter @manabandhu/client test && pnpm --filter @manabandhu/backend test",
+    "db:start": "docker-compose up -d",
+    "db:stop": "docker-compose down",
+    "db:reset": "pnpm db:stop && pnpm db:start && sleep 5 && supabase db reset",
+    "supabase:start": "supabase start",
+    "supabase:reset": "supabase db reset",
+    "prepare": "pnpm install"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "name": "@manabandhu/backend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "./gradlew bootRun",
+    "build": "./gradlew build -x test",
+    "test": "./gradlew test",
+    "test:unit": "./gradlew test --tests '*Unit*'",
+    "test:integration": "./gradlew test --tests '*Integration*'",
+    "checkstyle": "./gradlew checkstyleMain",
+    "spotbugs": "./gradlew spotbugsMain",
+    "flyway:migrate": "./gradlew flywayMigrate",
+    "flyway:validate": "./gradlew flywayValidate",
+    "clean": "./gradlew clean",
+    "wrapper": "gradle wrapper --gradle-version 8.10.2"
+  }
+}
