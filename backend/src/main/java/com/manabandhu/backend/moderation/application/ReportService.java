@@ -43,6 +43,11 @@ public class ReportService {
         return PagedResult.of(p.getContent().stream().map(ReportApi::toResponse).toList(), page, size, p.getTotalElements());
     }
 
+    public ReportApi.ReportResponse get(UUID id) {
+        return ReportApi.toResponse(repository.findById(id)
+                .orElseThrow(() -> BusinessException.notFound("Report not found")));
+    }
+
     @Transactional
     public ReportApi.ReportResponse resolve(CurrentUser staff, UUID id, String status, String resolution) {
         Authorization.requireStaff(staff);
