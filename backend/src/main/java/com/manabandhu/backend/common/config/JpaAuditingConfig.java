@@ -1,0 +1,27 @@
+package com.manabandhu.backend.common.config;
+
+import com.manabandhu.backend.security.CurrentUser;
+import java.util.Optional;
+import java.util.UUID;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.domain.AuditorAware;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
+@Configuration
+@EnableJpaAuditing
+public class JpaAuditingConfig {
+
+    @Bean
+    public AuditorAware<UUID> auditorAware() {
+        return () -> {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            if (auth != null && auth.getPrincipal() instanceof CurrentUser user) {
+                return Optional.of(user.userId());
+            }
+            return Optional.empty();
+        };
+    }
+}

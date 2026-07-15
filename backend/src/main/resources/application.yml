@@ -1,0 +1,69 @@
+spring:
+  application:
+    name: manabandhu-backend
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:54322/postgres}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+    validate-on-migrate: true
+
+supabase:
+  url: ${SUPABASE_URL:http://localhost:54321}
+  jwt:
+    secret: ${SUPABASE_JWT_SECRET:dev-insecure-secret-change-me}
+    issuer: ${SUPABASE_JWT_ISSUER:https://supabase.co/auth/v1}
+    audience: ${SUPABASE_JWT_AUDIENCE:authenticated}
+  storage:
+    bucket: ${SUPABASE_STORAGE_BUCKET:manabandhu-media}
+
+cors:
+  allowed-origins: ${CORS_ALLOWED_ORIGINS:}
+
+app:
+  push:
+    provider: ${PUSH_PROVIDER:console}
+  rate-limit:
+    per-minute: ${RATE_LIMIT_PER_MINUTE:120}
+  web-url: ${APP_WEB_URL:http://localhost:8081}
+
+server:
+  port: ${BACKEND_PORT:8080}
+  shutdown: graceful
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,readiness,likeliness
+  endpoint:
+    health:
+      show-details: when-authorized
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+
+logging:
+  level:
+    root: ${LOG_LEVEL:INFO}
+    com.manabandhu: ${LOG_LEVEL:INFO}
