@@ -1,37 +1,30 @@
 import React from "react";
-import { Text, View } from "react-native";
-import { useTheme } from "@/theme/ThemeProvider";
+import { View, Text } from "react-native";
+import { Button } from "./Button";
 
-export interface EmptyStateProps {
-  icon?: React.ReactNode;
-  title: string;
-  message?: string;
-  action?: React.ReactNode;
-}
-
-export const EmptyState: React.FC<EmptyStateProps> = ({
-  icon,
+export function EmptyState({
   title,
   message,
-  action,
-}) => {
-  const { colors } = useTheme();
+  actionLabel,
+  onAction,
+  icon,
+}: {
+  title: string;
+  message?: string;
+  actionLabel?: string;
+  onAction?: () => void;
+  icon?: React.ReactNode;
+}) {
   return (
-    <View className="items-center justify-center px-6 py-10">
-      {icon ? (
-        <View className="mb-4 items-center justify-center rounded-full p-4" style={{ backgroundColor: colors.surfaceAlt }}>
-          {icon}
-        </View>
+    <View className="items-center justify-center px-6 py-12" accessibilityRole="summary">
+      {icon ? <View className="mb-3">{icon}</View> : null}
+      <Text className="text-lg font-semibold text-text">{title}</Text>
+      {message ? <Text className="mt-1 text-center text-sm text-muted">{message}</Text> : null}
+      {actionLabel && onAction ? (
+        <Button variant="primary" size="sm" className="mt-4" onPress={onAction} accessibilityLabel={actionLabel}>
+          {actionLabel}
+        </Button>
       ) : null}
-      <Text className="text-lg font-semibold" style={{ color: colors.text }}>
-        {title}
-      </Text>
-      {message ? (
-        <Text className="mt-1 text-center text-sm" style={{ color: colors.textMuted }}>
-          {message}
-        </Text>
-      ) : null}
-      {action ? <View className="mt-4 w-full items-center">{action}</View> : null}
     </View>
   );
-};
+}

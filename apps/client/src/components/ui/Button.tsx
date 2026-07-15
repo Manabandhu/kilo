@@ -1,127 +1,74 @@
 import React from "react";
-import {
-  Pressable,
-  ActivityIndicator,
-  Text,
-  type PressableProps,
-  type StyleProp,
-  type ViewStyle,
-  type TextStyle,
-} from "react-native";
-import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "@/lib/cn";
-import { useTheme } from "@/theme/ThemeProvider";
+import { Pressable, ActivityIndicator, View, Text } from "react-native";
+import { cn } from "../../lib/cn";
 
-const buttonVariants = cva("flex-row items-center justify-center rounded-lg font-medium", {
-  variants: {
-    variant: {
-      primary: "",
-      secondary: "",
-      ghost: "",
-      danger: "",
-      outline: "",
-    },
-    size: {
-      sm: "px-3 gap-2",
-      md: "px-4 gap-2",
-      lg: "px-5 gap-3",
-    },
-    fullWidth: {
-      true: "w-full",
-      false: "",
-    },
-  },
-  defaultVariants: {
-    variant: "primary",
-    size: "md",
-    fullWidth: false,
-  },
-});
+type Variant = "primary" | "secondary" | "ghost" | "danger" | "outline";
+type Size = "sm" | "md" | "lg";
 
-type ButtonVariant = NonNullable<VariantProps<typeof buttonVariants>["variant"]>;
-type ThemeColors = ReturnType<typeof useTheme>["colors"];
-
-interface VariantStyle {
-  backgroundColor: string;
-  color: string;
-  borderColor?: string;
-  borderWidth?: number;
-}
-
-function variantStyle(variant: ButtonVariant, colors: ThemeColors): VariantStyle {
-  switch (variant) {
-    case "secondary":
-      return { backgroundColor: colors.surfaceAlt, color: colors.text };
-    case "ghost":
-      return { backgroundColor: "transparent", color: colors.primary };
-    case "danger":
-      return { backgroundColor: colors.danger, color: colors.textInverse };
-    case "outline":
-      return {
-        backgroundColor: "transparent",
-        color: colors.primary,
-        borderColor: colors.primary,
-        borderWidth: 1,
-      };
-    case "primary":
-    default:
-      return { backgroundColor: colors.primary, color: colors.textInverse };
-  }
-}
-
-export interface ButtonProps
-  extends Omit<PressableProps, "style" | "disabled">,
-    VariantProps<typeof buttonVariants> {
-  title: string;
+interface ButtonProps {
+  variant?: Variant;
+  size?: Size;
   loading?: boolean;
   disabled?: boolean;
-  leftIcon?: React.ReactNode;
-  rightIcon?: React.ReactNode;
-  style?: StyleProp<ViewStyle>;
-  textStyle?: StyleProp<TextStyle>;
+  fullWidth?: boolean;
+  onPress?: () => void;
+  children: React.ReactNode;
   accessibilityLabel?: string;
+  className?: string;
 }
 
-export const Button: React.FC<ButtonProps> = ({
-  title,
+const base = "flex-row items-center justify-center rounded-md font-semibold";
+const variants: Record<Variant, string> = {
+  primary: "bg-primary",
+  secondary: "bg-surface-alt",
+  ghost: "bg-transparent",
+  danger: "bg-danger",
+  outline: "border border-border bg-transparent",
+};
+const sizes: Record<Size, string> = {
+  sm: "px-3 py-1.5 text-sm min-h-[36px]",
+  md: "px-4 py-2.5 text-base min-h-[44px]",
+  lg: "px-5 py-3 text-lg min-h-[52px]",
+};
+const textColor: Record<Variant, string> = {
+  primary: "text-text-inverse",
+  secondary: "text-text",
+  ghost: "text-primary",
+  danger: "text-text-inverse",
+  outline: "text-text",
+};
+
+export function Button({
   variant = "primary",
   size = "md",
-  fullWidth = false,
-  loading = false,
-  disabled = false,
-  leftIcon,
-  rightIcon,
-  style,
-  textStyle,
-  className,
+  loading,
+  disabled,
+  fullWidth,
+  onPress,
+  children,
   accessibilityLabel,
-  ...rest
-}) => {
-  const { colors } = useTheme();
-  const vs = variantStyle(variant as ButtonVariant, colors);
+  className,
+}: ButtonProps) {
   const isDisabled = disabled || loading;
-
   return (
     <Pressable
-      accessibilityRole="button"
-      accessibilityLabel={accessibilityLabel ?? title}
-      accessibilityState={{ disabled: isDisabled, busy: loading }}
+      onPress={isDisabled ? undefined : onPress}
       disabled={isDisabled}
-      className={cn(buttonVariants({ variant, size, fullWidth }), className)}
-      style={({ pressed }) => [
-        vs,
-        { minHeight: 44, opacity: isDisabled ? 0.5 : pressed ? 0.85 : 1 },
-        style as ViewStyle,
-      ]}
-      {...rest}
-    >
-      {loading ? (
-        <ActivityIndicator color={vs.color} />
-      ) : (
-        leftIcon
+      accessibilityRole="button"
+      accessibilityLabel={accessibilityLabel}
+      accessibilityState={{ disabled: isDisabled, busy: loading }}
+      className={cn(
+        base,
+        variants[variant],
+        sizes[size],
+        textColor[variant],
+        fullWidth && "w-full",
+        isDisabled && "opacity-50",
+        className,
       )}
-      <Text style={[{ color: vs.color, fontWeight: "600" }, textStyle]}>{title}</Text>
-      {!loading && rightIcon}
+    >
+      {loading ? <ActivityIndicator color={variant === "primary" || variant === "danger" ? "#fff" : "#000"} /> : null}
+      {!loading && <Text className={cn(textColor[variant], "font-semibold")}>{children}</Text>}
     </Pressable>
   );
-};
+}
