@@ -4,5 +4,8 @@
   "description": "Shared TS/ESLint config for ManaBandhu packages",
   "license": "UNLICENSED",
   "private": true,
-  "files": ["tsconfig.base.json", "eslint.base.js"]
+  "files": ["tsconfig.base.json", "eslint.base.js"],
+  "scripts": {
+    "clean": "rm -rf dist"
+  }
 }

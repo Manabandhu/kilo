@@ -12,6 +12,7 @@
     "spotbugs": "./gradlew spotbugsMain",
     "flyway:migrate": "./gradlew flywayMigrate",
     "flyway:validate": "./gradlew flywayValidate",
+    "docker:build": "docker build -t manabandhu/backend .",
     "clean": "./gradlew clean",
     "wrapper": "gradle wrapper --gradle-version 8.10.2"
   }
