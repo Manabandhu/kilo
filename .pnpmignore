@@ -1,0 +1,59 @@
+# pnpm ignore
+node_modules/
+.pnpm-store/
+.pnpm-debug.log*
+pnpm-debug.log*
+
+# Turbo
+.turbo/
+dist/
+build/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Testing
+coverage/
+.nyc_output/
+
+# Supabase
+supabase/.temp/
+supabase/.branches/
+
+# Expo
+.expo/
+.expo-shared/
+web-build/
+
+# Android
+android/
+*.keystore
+google-services.json
+google-services.plist
+
+# iOS
+ios/
+*.mobileprovision
+*.p12
+
+# Secrets
+.env
+.env.local
+.env.*.local
+
+# Misc
+*.pem
+.vercel
+.netlify
